@@ -1,3 +1,5 @@
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+
 # Odin
 
 Receives requests from [Thor](https://github.com/zkirill/thor) via WebSockets and broadcasts messages to all connected clients.
@@ -11,6 +13,7 @@ Thank you
 
 Code used from the following samples:
 
+* https://github.com/housleyjk/ws-rs (MIT) Copyright (c) 2015 Jason Housley
 * https://github.com/nbaksalyar/mio-websocket (MIT) Copyright (c) 2015 Nikita Baksalyar
 
 License
