@@ -1,29 +1,31 @@
-extern crate mio_websocket;
+extern crate ws;
 
-use std::net::SocketAddr;
-use mio_websocket::interface::*;
+use ws::{listen, Handler, Sender, Result, Message, CloseCode};
 
-fn main() {
-    let mut ws = WebSocket::new("127.0.0.1:2794".parse::<SocketAddr>().unwrap());
+struct Server {
+    out: Sender,
+}
 
-    println!("Listening!");
+impl Handler for Server {
+    fn on_message(&mut self, msg: Message) -> Result<()> {
+        // Handle new message.
 
-    loop {
-        match ws.next() {
-            (tok, WebSocketEvent::TextMessage(msg)) => {
-                match ws.get_connected() {
-                    Ok(val) => {
-                        for token in val {
-                            let response = WebSocketEvent::TextMessage(msg.clone());
-                            ws.send((token, response));
-                        }
-                    }
-                    Err(e) => {
-                        panic!(e);
-                    }
-                }
-            }
-            _ => {}
+        // Broadcast the message to all connections.
+        self.out.broadcast(msg)
+    }
+
+    fn on_close(&mut self, code: CloseCode, reason: &str) {
+        // Handle connection close.
+        match code {
+            CloseCode::Normal => println!("Connection closed."),
+            CloseCode::Away => println!("Connection away."),
+            _ => println!("The client encountered an error: {}", reason),
         }
     }
+}
+
+fn main() {
+    let addr = "127.0.0.1:2794";
+    println!("Listening on {:?}...", addr);
+    listen(addr, |out| Server { out: out }).unwrap()
 }

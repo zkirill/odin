@@ -4,5 +4,4 @@ version = "0.1.0"
 authors = ["Kirill Zdornyy <kirill@dineserve.com>"]
 
 [dependencies]
-mio-websocket = { git = "https://github.com/nbaksalyar/mio-websocket" }
-env_logger = "0.3"
+ws = "0.4.5"
