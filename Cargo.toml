@@ -4,4 +4,4 @@ version = "0.1.0"
 authors = ["Kirill Zdornyy <kirill@dineserve.com>"]
 
 [dependencies]
-ws = "0.4.5"
+ws = { git = "https://github.com/housleyjk/ws-rs" }
